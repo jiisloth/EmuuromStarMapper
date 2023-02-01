@@ -1,0 +1,114 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://Square.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Line.tscn" type="PackedScene" id=3]
+[ext_resource path="res://CyberSloth.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 1, 1, 0.968627 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 4 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 4 )
+Button/styles/disabled = SubResource( 1 )
+Button/styles/focus = SubResource( 1 )
+Button/styles/hover = SubResource( 2 )
+Button/styles/normal = SubResource( 1 )
+Button/styles/pressed = SubResource( 1 )
+
+[node name="Main" type="CanvasLayer"]
+script = ExtResource( 1 )
+Square = ExtResource( 2 )
+Line = ExtResource( 3 )
+
+[node name="Box" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 3 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Box"]
+margin_right = 1024.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Box/HBoxContainer"]
+margin_right = 278.0
+margin_bottom = 32.0
+size_flags_vertical = 3
+text = "Room coordinates: X:"
+
+[node name="Label3" type="Label" parent="Box/HBoxContainer"]
+margin_left = 282.0
+margin_right = 472.0
+margin_bottom = 32.0
+size_flags_vertical = 3
+text = "                   "
+
+[node name="X" type="LineEdit" parent="Box/HBoxContainer/Label3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.0
+margin_bottom = 7.0
+size_flags_horizontal = 3
+align = 1
+
+[node name="Label2" type="Label" parent="Box/HBoxContainer"]
+margin_left = 476.0
+margin_right = 500.0
+margin_bottom = 32.0
+size_flags_vertical = 3
+text = "Y:"
+
+[node name="Label4" type="Label" parent="Box/HBoxContainer"]
+margin_left = 504.0
+margin_right = 694.0
+margin_bottom = 32.0
+size_flags_vertical = 3
+text = "                   "
+
+[node name="Y" type="LineEdit" parent="Box/HBoxContainer/Label4"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.0
+margin_bottom = 7.0
+size_flags_horizontal = 3
+align = 1
+
+[node name="Label5" type="Label" parent="Box/HBoxContainer"]
+margin_left = 698.0
+margin_right = 764.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = " "
+align = 2
+
+[node name="Button" type="Button" parent="Box/HBoxContainer"]
+margin_left = 768.0
+margin_right = 1024.0
+margin_bottom = 32.0
+text = "COPY TO CLIPBOARD"
+
+[node name="Grid" type="GridContainer" parent="Box"]
+margin_top = 36.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource( 3 )
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 30
+
+[node name="Line2D" type="Line2D" parent="."]
+
+[connection signal="text_changed" from="Box/HBoxContainer/Label3/X" to="." method="_on_X_text_changed"]
+[connection signal="text_changed" from="Box/HBoxContainer/Label4/Y" to="." method="_on_Y_text_changed"]
+[connection signal="pressed" from="Box/HBoxContainer/Button" to="." method="_on_Button_pressed"]
