@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Square.gd" type="Script" id=1]
 [ext_resource path="res://CyberSloth.ttf" type="DynamicFontData" id=2]
@@ -20,6 +20,8 @@ Button/styles/focus = SubResource( 1 )
 Button/styles/hover = SubResource( 2 )
 Button/styles/normal = SubResource( 1 )
 Button/styles/pressed = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=5]
 
 [node name="Square" type="Control"]
 anchor_right = 1.0
@@ -73,5 +75,6 @@ margin_left = -5.0
 margin_top = -5.0
 margin_right = 5.0
 margin_bottom = 5.0
+custom_fonts/font = SubResource( 5 )
 
 [connection signal="pressed" from="ColorRect/Button" to="." method="_on_Button_pressed"]
