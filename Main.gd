@@ -75,11 +75,11 @@ func print_connections():
         index += 1
     var starline = "stars={"
     for star in stars:
-        starline += "{"+str(star.x)+str(star.y)+"},"
+        starline += "{"+str(star.x)+","+str(star.y)+"},"
     starline += "},"
     var linesline = "lines={"
     for line in connects:
-        linesline += "{"+str(line.x)+str(line.y)+"},"
+        linesline += "{"+str(line.x)+","+str(line.y)+"},"
     linesline += "},"
     print(starline)
     print(linesline)
