@@ -12,19 +12,7 @@ var roomoffset = Vector2.ZERO
 
 func select_square(s):
     if current:
-        if current != s:
-            if current.connect_to(s):
-                var line = Line.instance()
-                add_child(line)
-                line.set_line(current,s)
-        else:
-            if s.bluestar:
-                s.bluestar = false
-            else:
-                for child in $Box/Grid.get_children():
-                    child.bluestar = false
-                s.bluestar = true
-                
+        connect_square(current, s)   
     current = s
     print_connections()
     for child in $Box/Grid.get_children():
@@ -32,6 +20,23 @@ func select_square(s):
     $Line2D.clear_points()
     $Line2D.add_point(s.get_center())
     $Line2D.add_point(get_viewport().get_mouse_position())
+
+
+func connect_square(f,t):
+    if f != t:
+        if f.connect_to(t):
+            var line = Line.instance()
+            add_child(line)
+            line.set_line(f,t)
+    else:
+        if t.bluestar:
+            t.bluestar = false
+        else:
+            for child in $Box/Grid.get_children():
+                child.bluestar = false
+            t.bluestar = true 
+
+    
 
 func _ready():
     for y in gridsize.y:
@@ -117,3 +122,64 @@ func _on_hidehelp_pressed():
 
 func _on_Help_pressed():
     $CanvasLayer/Help.show()
+
+
+func _on_Back_pressed():
+    $Import.hide()
+
+
+func _on_DoImport_pressed():
+    var import = $Import/HBoxContainer/Label3/Import.text
+    import = "{ " + import.replace('stars', '"stars": ').replace('bluestar', '"bluestar": ').replace('offset', '"offset": ').replace('lines', '"lines": ').replace("=","").replace("{","[").replace("}","]") + " }"
+    var parsed = JSON.parse(import).result
+    var lines = []
+    if "lines" in parsed.keys():
+        lines = parsed["lines"]
+    var star_offset = Vector2.ZERO
+    if "offset" in parsed.keys():
+        star_offset = Vector2(parsed["offset"][0],parsed["offset"][1])
+    var squares = []
+    var roffset = Vector2.ZERO
+    if "stars" in parsed.keys():
+        var stars = parsed["stars"]
+        if len(stars) > 0:
+            roffset.x = floor(stars[0][0]/gridsize.x)
+            roffset.y = floor(stars[0][1]/gridsize.y)
+            $Box/HBoxContainer/Label3/X.text = str(roffset.x + 1)
+            $Box/HBoxContainer/Label4/Y.text = str(roffset.y + 1)
+            roomoffset = roffset
+        for star in stars:
+            star[0] -= roffset.x*gridsize.x+star_offset.x
+            star[1] -= roffset.y*gridsize.y+star_offset.y
+            for square in $Box/Grid.get_children():
+                if square.pos == Vector2(star[0],star[1]):
+                    squares.append(square)
+                    break
+        
+        for i in len(stars):
+            var extra = true
+            for line in lines:
+                for val in line:
+                    if i == val-1:
+                        extra = false
+                    if not extra:
+                        break
+                if not extra:
+                    break
+            if extra:
+                squares[i].extrastar = true   
+        for line in lines:
+            var from = line[0]-1
+            var to = line[1]-1
+            connect_square(squares[from], squares[to])
+            
+    if "bluestar" in parsed.keys():
+        var b = parsed["bluestar"]-1
+        connect_square(squares[b], squares[b])
+    $Import/HBoxContainer/Label3/Import.text = ""
+    $Import.hide()
+                        
+                    
+
+func _on_Import_pressed():
+    $Import.show()

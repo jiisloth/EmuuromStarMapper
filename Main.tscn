@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Square.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Line.tscn" type="PackedScene" id=3]
 [ext_resource path="res://CyberSloth.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://TerminusTTF-4.49.2.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
@@ -25,6 +26,9 @@ Button/styles/pressed = SubResource( 1 )
 
 [sub_resource type="StyleBoxFlat" id=5]
 
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 5 )
+
 [node name="Main" type="CanvasLayer"]
 script = ExtResource( 1 )
 Square = ExtResource( 2 )
@@ -41,39 +45,38 @@ margin_bottom = 32.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="Box/HBoxContainer"]
-margin_right = 288.0
+margin_right = 124.0
 margin_bottom = 32.0
 size_flags_vertical = 3
-text = " Room coordinates: X:"
+text = " Room  X:"
 
 [node name="Label3" type="Label" parent="Box/HBoxContainer"]
-margin_left = 292.0
-margin_right = 482.0
+margin_left = 128.0
+margin_right = 258.0
 margin_bottom = 32.0
 size_flags_vertical = 3
-text = "                   "
+text = "             "
 
 [node name="X" type="LineEdit" parent="Box/HBoxContainer/Label3"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -3.0
 margin_bottom = 7.0
-size_flags_horizontal = 3
 align = 1
 
 [node name="Label2" type="Label" parent="Box/HBoxContainer"]
-margin_left = 486.0
-margin_right = 510.0
+margin_left = 262.0
+margin_right = 286.0
 margin_bottom = 32.0
 size_flags_vertical = 3
 text = "Y:"
 
 [node name="Label4" type="Label" parent="Box/HBoxContainer"]
-margin_left = 514.0
-margin_right = 704.0
+margin_left = 290.0
+margin_right = 420.0
 margin_bottom = 32.0
 size_flags_vertical = 3
-text = "                   "
+text = "             "
 
 [node name="Y" type="LineEdit" parent="Box/HBoxContainer/Label4"]
 anchor_right = 1.0
@@ -84,19 +87,28 @@ size_flags_horizontal = 3
 align = 1
 
 [node name="Help" type="Button" parent="Box/HBoxContainer"]
-margin_left = 708.0
-margin_right = 764.0
+margin_left = 424.0
+margin_right = 580.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
 custom_styles/hover = SubResource( 5 )
 text = "?"
 
+[node name="Import" type="Button" parent="Box/HBoxContainer"]
+margin_left = 584.0
+margin_right = 740.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+custom_styles/hover = SubResource( 5 )
+text = "Import"
+
 [node name="Clipboard" type="Button" parent="Box/HBoxContainer"]
-margin_left = 768.0
+margin_left = 744.0
 margin_right = 1024.0
 margin_bottom = 32.0
+size_flags_horizontal = 3
 custom_styles/hover = SubResource( 5 )
-text = "COPY TO CLIPBOARD"
+text = " Export to Clipboard "
 
 [node name="Grid" type="GridContainer" parent="Box"]
 margin_top = 36.0
@@ -108,6 +120,56 @@ theme = SubResource( 3 )
 custom_constants/vseparation = 0
 custom_constants/hseparation = 0
 columns = 30
+
+[node name="Import" type="ColorRect" parent="."]
+visible = false
+margin_left = 1.0
+margin_right = 1024.0
+margin_bottom = 36.0
+theme = SubResource( 3 )
+color = Color( 0.392157, 0.392157, 0.392157, 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Import"]
+margin_right = 1024.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Import/HBoxContainer"]
+margin_right = 300.0
+margin_bottom = 32.0
+size_flags_vertical = 3
+text = "Paste here to import: "
+
+[node name="Label3" type="Label" parent="Import/HBoxContainer"]
+margin_left = 304.0
+margin_right = 644.0
+margin_bottom = 32.0
+size_flags_vertical = 3
+text = "                                  "
+
+[node name="Import" type="LineEdit" parent="Import/HBoxContainer/Label3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.0
+margin_bottom = 7.0
+custom_fonts/font = SubResource( 6 )
+align = 1
+
+[node name="DoImport" type="Button" parent="Import/HBoxContainer"]
+margin_left = 648.0
+margin_right = 834.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+custom_styles/hover = SubResource( 5 )
+text = "Import"
+
+[node name="Back" type="Button" parent="Import/HBoxContainer"]
+margin_left = 838.0
+margin_right = 1024.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+custom_styles/hover = SubResource( 5 )
+text = "Back"
 
 [node name="Line2D" type="Line2D" parent="."]
 
@@ -158,5 +220,8 @@ text = "< HIDE THE HELP SCREEN >"
 [connection signal="text_changed" from="Box/HBoxContainer/Label3/X" to="." method="_on_X_text_changed"]
 [connection signal="text_changed" from="Box/HBoxContainer/Label4/Y" to="." method="_on_Y_text_changed"]
 [connection signal="pressed" from="Box/HBoxContainer/Help" to="." method="_on_Help_pressed"]
+[connection signal="pressed" from="Box/HBoxContainer/Import" to="." method="_on_Import_pressed"]
 [connection signal="pressed" from="Box/HBoxContainer/Clipboard" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Import/HBoxContainer/DoImport" to="." method="_on_DoImport_pressed"]
+[connection signal="pressed" from="Import/HBoxContainer/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="CanvasLayer/Help/Label/hidehelp" to="." method="_on_hidehelp_pressed"]
