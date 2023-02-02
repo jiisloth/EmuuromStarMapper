@@ -112,8 +112,8 @@ func _on_Y_text_changed(new_text):
 
 
 func _on_hidehelp_pressed():
-    $Help.hide()
+    $CanvasLayer/Help.hide()
 
 
 func _on_Help_pressed():
-    $Help.show()
+    $CanvasLayer/Help.show()

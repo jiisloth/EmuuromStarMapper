@@ -111,14 +111,17 @@ columns = 30
 
 [node name="Line2D" type="Line2D" parent="."]
 
-[node name="Help" type="ColorRect" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Help" type="ColorRect" parent="CanvasLayer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = SubResource( 3 )
 color = Color( 0.0431373, 0.0352941, 0.231373, 1 )
 
-[node name="Label" type="Label" parent="Help"]
+[node name="Label" type="Label" parent="CanvasLayer/Help"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 14.0
@@ -136,11 +139,11 @@ Doubleclicking a star makes it the \"bluestar\"
 
 No warranty and no promises. If emuurom breaks because of this then maybe just fix it.
 
-lastly: emuurom when? 
+Lastly: emuurom when? 
 "
 autowrap = true
 
-[node name="hidehelp" type="Button" parent="Help/Label"]
+[node name="hidehelp" type="Button" parent="CanvasLayer/Help/Label"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -149,10 +152,11 @@ margin_left = -20.0
 margin_top = -32.0
 margin_right = 20.0
 grow_horizontal = 2
+mouse_default_cursor_shape = 2
 text = "< HIDE THE HELP SCREEN >"
 
 [connection signal="text_changed" from="Box/HBoxContainer/Label3/X" to="." method="_on_X_text_changed"]
 [connection signal="text_changed" from="Box/HBoxContainer/Label4/Y" to="." method="_on_Y_text_changed"]
 [connection signal="pressed" from="Box/HBoxContainer/Help" to="." method="_on_Help_pressed"]
 [connection signal="pressed" from="Box/HBoxContainer/Clipboard" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="Help/Label/hidehelp" to="." method="_on_hidehelp_pressed"]
+[connection signal="pressed" from="CanvasLayer/Help/Label/hidehelp" to="." method="_on_hidehelp_pressed"]
