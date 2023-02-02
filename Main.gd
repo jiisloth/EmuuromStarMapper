@@ -34,8 +34,8 @@ func select_square(s):
     $Line2D.add_point(get_viewport().get_mouse_position())
 
 func _ready():
-    for x in gridsize.x:
-        for y in gridsize.y:
+    for y in gridsize.y:
+        for x in gridsize.x:
             var s = Square.instance()
             s.pos = Vector2(x,y)
             $Box/Grid.add_child(s)
@@ -65,6 +65,9 @@ func print_connections():
                     squares.append(to)
             if not square in squares:
                 squares.append(square)
+        if square.extrastar:
+            if not square in squares:
+                squares.append(square)
     for square in squares:
         if square.bluestar:
             bluestar = index
@@ -81,6 +84,7 @@ func print_connections():
     for line in connects:
         linesline += "{"+str(line.x)+","+str(line.y)+"},"
     linesline += "},"
+    print("--------------------")
     print(starline)
     print(linesline)
     text = starline + "\n" + linesline
@@ -105,3 +109,11 @@ func _on_Y_text_changed(new_text):
         roomoffset.y = abs(int(new_text))-1
     else:
         $Box/HBoxContainer/Label4/Y.text = ""
+
+
+func _on_hidehelp_pressed():
+    $Help.hide()
+
+
+func _on_Help_pressed():
+    $Help.show()

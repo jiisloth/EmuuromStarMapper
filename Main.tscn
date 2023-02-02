@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Square.tscn" type="PackedScene" id=2]
@@ -23,6 +23,8 @@ Button/styles/hover = SubResource( 2 )
 Button/styles/normal = SubResource( 1 )
 Button/styles/pressed = SubResource( 1 )
 
+[sub_resource type="StyleBoxFlat" id=5]
+
 [node name="Main" type="CanvasLayer"]
 script = ExtResource( 1 )
 Square = ExtResource( 2 )
@@ -39,14 +41,14 @@ margin_bottom = 32.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="Box/HBoxContainer"]
-margin_right = 278.0
+margin_right = 288.0
 margin_bottom = 32.0
 size_flags_vertical = 3
-text = "Room coordinates: X:"
+text = " Room coordinates: X:"
 
 [node name="Label3" type="Label" parent="Box/HBoxContainer"]
-margin_left = 282.0
-margin_right = 472.0
+margin_left = 292.0
+margin_right = 482.0
 margin_bottom = 32.0
 size_flags_vertical = 3
 text = "                   "
@@ -60,15 +62,15 @@ size_flags_horizontal = 3
 align = 1
 
 [node name="Label2" type="Label" parent="Box/HBoxContainer"]
-margin_left = 476.0
-margin_right = 500.0
+margin_left = 486.0
+margin_right = 510.0
 margin_bottom = 32.0
 size_flags_vertical = 3
 text = "Y:"
 
 [node name="Label4" type="Label" parent="Box/HBoxContainer"]
-margin_left = 504.0
-margin_right = 694.0
+margin_left = 514.0
+margin_right = 704.0
 margin_bottom = 32.0
 size_flags_vertical = 3
 text = "                   "
@@ -81,19 +83,19 @@ margin_bottom = 7.0
 size_flags_horizontal = 3
 align = 1
 
-[node name="Label5" type="Label" parent="Box/HBoxContainer"]
-margin_left = 698.0
+[node name="Help" type="Button" parent="Box/HBoxContainer"]
+margin_left = 708.0
 margin_right = 764.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
-size_flags_vertical = 3
-text = " "
-align = 2
+custom_styles/hover = SubResource( 5 )
+text = "?"
 
-[node name="Button" type="Button" parent="Box/HBoxContainer"]
+[node name="Clipboard" type="Button" parent="Box/HBoxContainer"]
 margin_left = 768.0
 margin_right = 1024.0
 margin_bottom = 32.0
+custom_styles/hover = SubResource( 5 )
 text = "COPY TO CLIPBOARD"
 
 [node name="Grid" type="GridContainer" parent="Box"]
@@ -109,6 +111,48 @@ columns = 30
 
 [node name="Line2D" type="Line2D" parent="."]
 
+[node name="Help" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 3 )
+color = Color( 0.0431373, 0.0352941, 0.231373, 1 )
+
+[node name="Label" type="Label" parent="Help"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 14.0
+margin_top = 20.0
+margin_right = -33.0
+margin_bottom = -27.0
+text = "This is the emuurom star mapper made for borb to map out the stars of emuurom.
+
+Click squares to add star connections, Right click to stop connecting.
+Remove connections by right clicking them.
+
+Middle click a square to toggle disconnected star.
+
+Doubleclicking a star makes it the \"bluestar\"
+
+No warranty and no promises. If emuurom breaks because of this then maybe just fix it.
+
+lastly: emuurom when? 
+"
+autowrap = true
+
+[node name="hidehelp" type="Button" parent="Help/Label"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -32.0
+margin_right = 20.0
+grow_horizontal = 2
+text = "< HIDE THE HELP SCREEN >"
+
 [connection signal="text_changed" from="Box/HBoxContainer/Label3/X" to="." method="_on_X_text_changed"]
 [connection signal="text_changed" from="Box/HBoxContainer/Label4/Y" to="." method="_on_Y_text_changed"]
-[connection signal="pressed" from="Box/HBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Box/HBoxContainer/Help" to="." method="_on_Help_pressed"]
+[connection signal="pressed" from="Box/HBoxContainer/Clipboard" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Help/Label/hidehelp" to="." method="_on_hidehelp_pressed"]
