@@ -101,7 +101,7 @@ text = "COPY TO CLIPBOARD"
 [node name="Grid" type="GridContainer" parent="Box"]
 margin_top = 36.0
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 632.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource( 3 )

@@ -10,6 +10,7 @@ func _on_Button_pressed():
     print(pos)
     get_parent().get_parent().get_parent().select_square(self)
     selected = true
+    print(rect_size)
     
     
 func _process(delta):
